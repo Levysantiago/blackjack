@@ -3,7 +3,7 @@ from croupier import Croupier
 import pickle
 
 IP = '10.42.0.159'
-port = 5102
+port = 5101
 buffer_size = 1024
 player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 player.bind((IP, port))
@@ -49,12 +49,12 @@ def main():
     if(playFirst(IP)):
         croupier = Croupier("conf.txt")
         flag = True
-    
-    while(croupier == None):
-        if(not flag):
-            waitMyTurn()
-            flag = True
-            
+
+    if(not flag):
+        conexao, endereco = waitMyTurn()
+        receive(conexao, endereco)
+        flag = True
+
     while(not croupier.deck.empty()):
         print(get_menu())
         option = raw_input()
@@ -67,11 +67,17 @@ def main():
         elif(option == '3'):
             print("Proximo")
             ip, porta = croupier.getNext()
+            print("enviando")
             next(ip, int(porta), croupier)
+            print("enviou")
             flag = False
-            croupier = None
+            #croupier = None
+            #receive(conexao, endereco)
+            
+        if(not flag):
             conexao, endereco = waitMyTurn()
             receive(conexao, endereco)
+            flag = True
         
 
 if __name__ == "__main__":

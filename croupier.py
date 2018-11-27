@@ -15,11 +15,15 @@ class Croupier:
             line = line.strip()
             ip, porta, nome = line.split(' ')
             self.list_player.append(Player(ip, porta, nome))
-        self.pool = cycle(self.list_player)
-        next(self.pool)
+        self.pool = self.list_player
+        #next(self.pool)
     
     def getNext(self):
+        return self.list_player[1].ip, self.list_player[1].porta
+    '''
+    def getNext(self):
         return next(self.pool).ip, next(self.pool).porta
+    '''
 
     def showGameStatus():
         pass
