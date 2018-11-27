@@ -52,7 +52,7 @@ def main():
 
     if(not flag):
         conexao, endereco = waitMyTurn()
-        receive(conexao, endereco)
+        croupier = receive(conexao, endereco)
         flag = True
 
     while(not croupier.deck.empty()):
@@ -73,10 +73,10 @@ def main():
             flag = False
             #croupier = None
             #receive(conexao, endereco)
-            
+
         if(not flag):
             conexao, endereco = waitMyTurn()
-            receive(conexao, endereco)
+            croupier = receive(conexao, endereco)
             flag = True
         
 
