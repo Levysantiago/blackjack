@@ -35,6 +35,7 @@ def waitMyTurn():
     player.listen(5)
     while conexao == None:
         conexao,endereco = player.accept()
+    return conexao, endereco
 
 def playFirst(ip):
     file = open("conf.txt", "r")
@@ -49,11 +50,12 @@ def main():
         croupier = Croupier("conf.txt")
         flag = True
     
-    while(not croupier.deck.empty()):
+    while(croupier == None):
         if(not flag):
             waitMyTurn()
             flag = True
-        
+            
+    while(not croupier.deck.empty()):
         print(get_menu())
         option = raw_input()
         if(option == '0'):
@@ -67,6 +69,9 @@ def main():
             ip, porta = croupier.getNext()
             next(ip, int(porta), croupier)
             flag = False
+            croupier = None
+            conexao, endereco = waitMyTurn()
+            receive(conexao, endereco)
         
 
 if __name__ == "__main__":
