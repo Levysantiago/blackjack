@@ -2,11 +2,9 @@ import socket
 from croupier import Croupier
 import pickle
 
-IP = '10.42.0.159'
+IP = '192.168.137.160'
 port = 5101
 buffer_size = 1024
-player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-player.bind((IP, port))
 
 def get_menu():
     menu = '(0) - Novo Jogo \n'
@@ -16,26 +14,23 @@ def get_menu():
 
     return menu
 
-
-def receive (conexao, endereco):
-    while conexao != None:
-        msg = conexao.recv(buffer_size)
-        croupier = pickle.loads(msg)
-        conexao.close()
-        conexao = None
-    return croupier
-
 def next (ip, porta, croupier):
+    player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     player.connect((ip,porta))
+
     croupier_dump = pickle.dumps(croupier)
     player.send(croupier_dump)
+    player.close()
 
 def waitMyTurn():
-    conexao = None
-    player.listen(5)
-    while conexao == None:
-        conexao,endereco = player.accept()
-    return conexao, endereco
+    player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    player.bind((IP, port))
+    player.listen(1)
+    conexao, endereco = player.accept()
+
+    while True:
+        croupier = conexao.recv(2024)
+    return pickle.loads(croupier)
 
 def playFirst(ip):
     file = open("conf.txt", "r")
@@ -51,8 +46,7 @@ def main():
         flag = True
 
     if(not flag):
-        conexao, endereco = waitMyTurn()
-        croupier = receive(conexao, endereco)
+        croupier = waitMyTurn()
         flag = True
 
     while(not croupier.deck.empty()):
@@ -71,12 +65,9 @@ def main():
             next(ip, int(porta), croupier)
             print("enviou")
             flag = False
-            #croupier = None
-            #receive(conexao, endereco)
 
         if(not flag):
-            conexao, endereco = waitMyTurn()
-            croupier = receive(conexao, endereco)
+            croupier = waitMyTurn()
             flag = True
         
 
