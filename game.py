@@ -29,7 +29,9 @@ def waitMyTurn():
     conexao, endereco = player.accept()
 
     while True:
-        croupier = conexao.recv(2024)
+        dados = conexao.recv(4096)
+        if(dados != 0):
+            break
     return pickle.loads(croupier)
 
 def playFirst(ip):
@@ -48,6 +50,8 @@ def main():
     if(not flag):
         croupier = waitMyTurn()
         flag = True
+    
+    print(croupier)
 
     while(not croupier.deck.empty()):
         print(get_menu())
