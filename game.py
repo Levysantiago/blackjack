@@ -79,7 +79,7 @@ def main():
 
         if(croupier.allFinished()):
             break
-        if(not jogando):
+        elif(not jogando):
             croupier = waitMyTurn()
             jogando = True
     ip, porta = croupier.getNext()
