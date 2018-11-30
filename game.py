@@ -75,6 +75,7 @@ def main():
             ip, porta = croupier.getNext()
             next(ip, int(porta), croupier)
             jogando = False
+            os.system('clear')
 
         if(not jogando):
             croupier = waitMyTurn()

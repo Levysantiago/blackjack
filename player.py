@@ -27,3 +27,6 @@ class Player():
 
     def getNome(self):
         return self.nome
+
+    def getPoints(self):
+        return self.points

@@ -24,7 +24,6 @@ class Croupier:
             self.playerIndex = 0
         else:
             self.playerIndex += 1
-        print("Enviando para "+self.list_player[self.playerIndex].ip)
         return self.list_player[self.playerIndex].ip, self.list_player[self.playerIndex].porta
 
     def showGameStatus(self):
@@ -33,6 +32,19 @@ class Croupier:
             print("\nPlayer: "+player.getNome() +
                   "\nPoints = " + str(player.points))
         print("\n")
+
+    def showResults(self):
+        print("\nRESULTS:")
+        winner = self.list_player[0]
+        for player in self.list_player[1:]:
+            points = player.getPoints()
+            if(points > winner.getPoints and points < 21):
+                winner = player
+        if(winner.points > 21):
+            print("\nDraw\n")
+        else:
+            print("\nPlayer " + winner.getNome +
+                  " with " + str(winner.getPoints()) + " points")
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
