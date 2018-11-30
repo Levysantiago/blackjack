@@ -40,7 +40,7 @@ class Croupier:
             points = player.getPoints()
             if(winner.getPoints() > 21):
                 winner = player
-            else if(points > winner.getPoints() and points <= 21):
+            elif(points > winner.getPoints() and points <= 21):
                 winner = player
         if(winner.getPoints() > 21):
             print("\nDraw\n")
