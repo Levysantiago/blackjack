@@ -5,38 +5,41 @@ from itertools import cycle
 
 
 class Croupier:
-
     def __init__(self, fileConfig):
         dados = open(fileConfig, 'r')
         self.list_player = []
         self.deck = Deck()
+        self.playerIndex = 0
 
         for line in dados:
             line = line.strip()
             ip, porta, nome = line.split(' ')
             self.list_player.append(Player(ip, porta, nome))
         self.pool = self.list_player
-        #next(self.pool)
-    
-    def getNext(self):
-        return self.list_player[1].ip, self.list_player[1].porta
-    '''
-    def getNext(self):
-        return next(self.pool).ip, next(self.pool).porta
-    '''
 
-    def showGameStatus():
-        pass
+    def getNext(self):
+        tam = len(self.list_player) - 1
+        if(self.playerIndex == tam):
+            self.playerIndex = 0
+        self.playerIndex += 1
+        return self.list_player[self.playerIndex].ip, self.list_player[self.playerIndex].porta
+
+    def showGameStatus(self):
+        print("\nGAME STATUS:")
+        for player in self.list_player:
+            print("\nPlayer: "+player.getNome() +
+                  "\nPoints = " + str(player.points))
+        print("\n")
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
 
     def getCard(self, playerID):
         player = self.findPlayer(playerID)
-        if (not player.isFinish()):
+        if (not player.isFinished()):
             if (not self.deck.empty()):
-                player.newCard(self.deck.pop())
-                self.showPlayer(player)
+                card = player.newCard(self.deck.pop())
+            return card.name()
 
         if (self.allFinished()):
             self.showResults()
@@ -52,14 +55,10 @@ class Croupier:
                 return False
         return True
 
-    def showPlayer(self, player):
-        print("Points = " + str(player.points) +
-              "\nFinished = " + str(player.isFinish()) +
-              "\nCard = "+str(player.lastCard[0])+" Value = "+str(player.lastCard[1]))
-
-def main():
-    cr = Croupier("conf.txt")
-    #print(cr.findPlayer("192.168.0.212")[0].nome)
-
-
-main()
+    def showPlayerStatus(self, playerID):
+        player = self.findPlayer(playerID)
+        cardName, cardValue = player.getLastCard()
+        print("\nSTATUS:"
+              "\nPoints = " + str(player.points) +
+              "\nFinished = " + str(player.isFinished()) +
+              "\nCard = "+cardName+" Value = "+str(cardValue)+"\n")

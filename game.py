@@ -1,30 +1,35 @@
-import socket
 from croupier import Croupier
+import socket
 import pickle
+import os
 
-IP = '192.168.137.160'
-port = 5101
+os.system('clear')
+IP = '192.168.2.59'
+PORT = 5101
 buffer_size = 1024
+
 
 def get_menu():
     menu = '(0) - Novo Jogo \n'
-    menu += '(1) - Carta \n' 
-    menu += '(2) - Sem mais cartas \n' 
-    menu += '(3) - Proximo \n' 
+    menu += '(1) - Carta \n'
+    menu += '(2) - Sem mais cartas \n'
+    menu += '(3) - Proximo \n'
 
     return menu
 
-def next (ip, porta, croupier):
-    player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    player.connect((ip,porta))
+
+def next(ip, porta, croupier):
+    player = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    player.connect((ip, porta))
 
     croupier_dump = pickle.dumps(croupier)
     player.send(croupier_dump)
     player.close()
 
+
 def waitMyTurn():
-    player = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    player.bind((IP, port))
+    player = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    player.bind((IP, PORT))
     player.listen(1)
     conexao, endereco = player.accept()
 
@@ -32,7 +37,8 @@ def waitMyTurn():
         dados = conexao.recv(4096)
         if(dados != 0):
             break
-    return pickle.loads(croupier)
+    return pickle.loads(dados)
+
 
 def playFirst(ip):
     file = open("conf.txt", "r")
@@ -40,18 +46,17 @@ def playFirst(ip):
     file.close()
     return ret
 
+
 def main():
     croupier = None
-    flag = False
+    jogando = False
     if(playFirst(IP)):
         croupier = Croupier("conf.txt")
-        flag = True
+        jogando = True
 
-    if(not flag):
+    if(not jogando):
         croupier = waitMyTurn()
-        flag = True
-    
-    print(croupier)
+        jogando = True
 
     while(not croupier.deck.empty()):
         print(get_menu())
@@ -60,20 +65,21 @@ def main():
             print("Novo Jogo")
         elif(option == '1'):
             croupier.getCard(IP)
+            os.system('clear')
+            croupier.showPlayerStatus(IP)
         elif(option == '2'):
-            print("Sem mais cartas")
+            croupier.finish(IP)
+            os.system('clear')
+            croupier.showPlayerStatus(IP)
         elif(option == '3'):
-            print("Proximo")
             ip, porta = croupier.getNext()
-            print("enviando")
             next(ip, int(porta), croupier)
-            print("enviou")
-            flag = False
+            jogando = False
 
-        if(not flag):
+        if(not jogando):
             croupier = waitMyTurn()
-            flag = True
-        
+            jogando = True
+
 
 if __name__ == "__main__":
     main()
