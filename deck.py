@@ -12,7 +12,8 @@ class Deck:
              Card('7D', 7), Card('7C', 7), Card('7S', 7), Card('7H', 7),
              Card('8D', 8), Card('8C', 8), Card('8S', 8), Card('8H', 8),
              Card('9D', 9), Card('9C', 9), Card('9S', 9), Card('9H', 9),
-             Card('10D', 10), Card('10H', 10), Card('10S', 10), Card('10H', 10),
+             Card('10D', 10), Card('10H', 10), Card(
+                 '10S', 10), Card('10H', 10),
              Card('JD', 10), Card('JH', 10), Card('JS', 10), Card('JH', 10),
              Card('QD', 10), Card('QH', 10), Card('QS', 10), Card('QH', 10),
              Card('KD', 10), Card('KH', 10), Card('KS', 10), Card('KH', 10)]
@@ -25,3 +26,6 @@ class Deck:
 
     def empty(self):
         return not self.cards
+
+    def shuffle(self):
+        shuffle(self.cards)

@@ -64,9 +64,10 @@ def main():
         if(option == '0'):
             print("Novo Jogo")
         elif(option == '1'):
-            croupier.getCard(IP)
             os.system('clear')
+            croupier.getCard(IP)
             croupier.showPlayerStatus(IP)
+            croupier.showGameStatus()
         elif(option == '2'):
             croupier.finish(IP)
             os.system('clear')

@@ -43,13 +43,14 @@ class Croupier:
         if(winner.points > 21):
             print("\nDraw\n")
         else:
-            print("\nPlayer " + winner.getNome +
+            print("\nPlayer " + winner.getNome() +
                   " with " + str(winner.getPoints()) + " points")
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
 
     def getCard(self, playerID):
+        self.deck.shuffle()
         player = self.findPlayer(playerID)
         if (not player.isFinished()):
             if (not self.deck.empty()):
