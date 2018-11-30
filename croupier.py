@@ -15,13 +15,15 @@ class Croupier:
             line = line.strip()
             ip, porta, nome = line.split(' ')
             self.list_player.append(Player(ip, porta, nome))
+        dados.close()
         self.pool = self.list_player
 
     def getNext(self):
         tam = len(self.list_player) - 1
         if(self.playerIndex == tam):
             self.playerIndex = 0
-        self.playerIndex += 1
+        else:
+            self.playerIndex += 1
         print("Enviando para "+self.list_player[self.playerIndex].ip)
         return self.list_player[self.playerIndex].ip, self.list_player[self.playerIndex].porta
 
