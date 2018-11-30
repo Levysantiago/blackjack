@@ -67,7 +67,6 @@ def main():
             os.system('clear')
             croupier.getCard(IP)
             croupier.showPlayerStatus(IP)
-            croupier.showGameStatus()
         elif(option == '2'):
             croupier.finish(IP)
             os.system('clear')
@@ -78,9 +77,15 @@ def main():
             jogando = False
             os.system('clear')
 
+        if(croupier.allFinished()):
+            break
         if(not jogando):
             croupier = waitMyTurn()
             jogando = True
+    ip, porta = croupier.getNext()
+    next(ip, int(porta), croupier)
+    os.system("clear")
+    croupier.showResults()
 
 
 if __name__ == "__main__":

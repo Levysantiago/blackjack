@@ -38,7 +38,7 @@ class Croupier:
         winner = self.list_player[0]
         for player in self.list_player[1:]:
             points = player.getPoints()
-            if(points > winner.getPoints and points < 21):
+            if(points > winner.getPoints() and points < 21):
                 winner = player
         if(winner.points > 21):
             print("\nDraw\n")
