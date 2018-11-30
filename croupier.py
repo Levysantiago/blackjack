@@ -22,6 +22,7 @@ class Croupier:
         if(self.playerIndex == tam):
             self.playerIndex = 0
         self.playerIndex += 1
+        print("Enviando para "+self.list_player[self.playerIndex].ip)
         return self.list_player[self.playerIndex].ip, self.list_player[self.playerIndex].porta
 
     def showGameStatus(self):
