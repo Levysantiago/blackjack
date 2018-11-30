@@ -83,7 +83,10 @@ def main():
             croupier = waitMyTurn()
             jogando = True
     ip, porta = croupier.getNext()
-    next(ip, int(porta), croupier)
+    try:
+        next(ip, int(porta), croupier)
+    except:
+        pass  # Todos receberam
     os.system("clear")
     croupier.showResults()
 
