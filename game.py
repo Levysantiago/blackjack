@@ -60,6 +60,8 @@ def main():
 
     while(not croupier.deck.empty()):
         print(get_menu())
+        if(croupier.allFinished()):
+            break
         option = raw_input()
         if(option == '0'):
             print("Novo Jogo")
