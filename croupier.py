@@ -8,6 +8,7 @@ class Croupier:
     def __init__(self, fileConfig):
         dados = open(fileConfig, 'r')
         self.list_player = []
+        self.dict_player = {}
         self.deck = Deck()
 
         index = 0
@@ -24,10 +25,10 @@ class Croupier:
         tam = len(self.list_player) - 1
         index = player.getIndex()
         if(index == tam):
-            return self.list_player[0].ip, self.list_player[0].porta
+            return (self.list_player[0].ip, int(self.list_player[0].porta))
         else:
             index += 1
-            return self.list_player[index].ip, self.list_player[index].porta
+            return (self.list_player[index].ip, int(self.list_player[index].porta))
 
     def showGameStatus(self):
         print("\nGAME STATUS:")

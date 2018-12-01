@@ -19,9 +19,10 @@ def get_menu():
     return menu
 
 
-def next(ip, porta, croupier):
+def next(croupier):
     player = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    player.connect((ip, porta))
+    nextPlayer = croupier.getNext(IP)
+    player.connect(nextPlayer)
 
     croupier_dump = pickle.dumps(croupier)
     player.send(croupier_dump)
@@ -50,7 +51,6 @@ def playFirst(ip):
 
 
 def main():
-    envioFinal = 0
     croupier = None
     jogando = False
     if(playFirst(IP)):
@@ -80,8 +80,7 @@ def main():
             os.system('clear')
             croupier.showPlayerStatus(IP)
         elif(option == '3'):
-            ip, porta = croupier.getNext(IP)
-            next(ip, int(porta), croupier)
+            next(croupier)
             jogando = False
             os.system('clear')
         elif(option == '4'):
@@ -103,8 +102,7 @@ def main():
                 croupier = Croupier("conf.txt")
                 jogando = True
             else:
-                ip, porta = croupier.getNext(IP)
-                next(ip, int(porta), croupier)
+                next(croupier)
                 envioFinal += 1
 
             if(not jogando):
