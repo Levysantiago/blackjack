@@ -60,8 +60,7 @@ def main():
 
     while(not croupier.deck.empty()):
         print(get_menu())
-        if(croupier.allFinished()):
-            break
+
         option = raw_input()
         if(option == '0'):
             print("Novo Jogo")
@@ -79,18 +78,18 @@ def main():
             jogando = False
             os.system('clear')
 
-        if(croupier.allFinished()):
-            break
         elif(not jogando):
             croupier = waitMyTurn()
             jogando = True
-    ip, porta = croupier.getNext()
-    try:
-        next(ip, int(porta), croupier)
-    except:
-        pass  # Todos receberam
-    os.system("clear")
-    croupier.showResults()
+
+        if(croupier.allFinished()):
+            ip, porta = croupier.getNext()
+            try:
+                next(ip, int(porta), croupier)
+            except:
+                pass  # Todos receberam
+            os.system("clear")
+            croupier.showResults()
 
 
 if __name__ == "__main__":
