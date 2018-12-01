@@ -9,22 +9,25 @@ class Croupier:
         dados = open(fileConfig, 'r')
         self.list_player = []
         self.deck = Deck()
-        self.playerIndex = 0
 
+        index = 0
         for line in dados:
             line = line.strip()
             ip, porta, nome = line.split(' ')
-            self.list_player.append(Player(ip, porta, nome))
+            self.list_player.append(Player(ip, porta, nome, index))
+            index += 1
         dados.close()
         self.pool = self.list_player
 
-    def getNext(self):
+    def getNext(self, playerID):
+        player = self.findPlayer(playerID)
         tam = len(self.list_player) - 1
-        if(self.playerIndex == tam):
-            self.playerIndex = 0
+        index = player.getIndex()
+        if(index == tam):
+            return self.list_player[0].ip, self.list_player[0].porta
         else:
-            self.playerIndex += 1
-        return self.list_player[self.playerIndex].ip, self.list_player[self.playerIndex].porta
+            index += 1
+            return self.list_player[index].ip, self.list_player[index].porta
 
     def showGameStatus(self):
         print("\nGAME STATUS:")

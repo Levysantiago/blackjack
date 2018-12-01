@@ -1,7 +1,8 @@
 
 class Player():
 
-    def __init__(self, ip, porta, nome):
+    def __init__(self, ip, porta, nome, index):
+        self.index = index
         self.ip = ip
         self.nome = nome
         self.porta = porta
@@ -30,3 +31,6 @@ class Player():
 
     def getPoints(self):
         return self.points
+
+    def getIndex(self):
+        return self.index

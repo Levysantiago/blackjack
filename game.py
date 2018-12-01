@@ -88,11 +88,9 @@ def main():
         while(croupier.allFinished()):
             jogando = False
             os.system("clear")
-            print("Entra")
             croupier.showResults()
 
             if(envioFinal > 0):
-                print("Resetando")
                 # Ultimo a receber a mensagem
                 del croupier
                 croupier = Croupier("conf.txt")
@@ -103,7 +101,9 @@ def main():
                 envioFinal += 1
 
             if(not jogando):
+                print("Entrei aqui")
                 croupier = waitMyTurn()
+                print("Ja Sai")
                 jogando = True
                 os.system("clear")
 
