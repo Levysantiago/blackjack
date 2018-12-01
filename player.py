@@ -21,7 +21,10 @@ class Player():
         return card
 
     def getLastCard(self):
-        return self.cards[-1].name(), self.cards[-1].value()
+        try:
+            return self.cards[-1].name(), self.cards[-1].value()
+        except:
+            return None, None
 
     def setFinished(self, valor):
         self.finished = valor

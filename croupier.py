@@ -81,5 +81,7 @@ class Croupier:
         cardName, cardValue = player.getLastCard()
         print("\nSTATUS:"
               "\nPoints = " + str(player.points) +
-              "\nFinished = " + str(player.isFinished()) +
-              "\nCard = "+cardName+" Value = "+str(cardValue)+"\n")
+              "\nFinished = " + str(player.isFinished()))
+        if(cardName != None):
+            print("\nCard = "+cardName+" Value = "+str(cardValue))
+        print("\n")
