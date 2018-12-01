@@ -95,6 +95,7 @@ def main():
                 del croupier
                 croupier = Croupier("conf.txt")
                 jogando = True
+                os.system("clear")
             else:
                 ip, porta = croupier.getNext()
                 next(ip, int(porta), croupier)
@@ -102,7 +103,9 @@ def main():
 
             if(not jogando):
                 croupier = waitMyTurn()
+                envioFinal = 0
                 jogando = True
+                os.system("clear")
 
 
 if __name__ == "__main__":
