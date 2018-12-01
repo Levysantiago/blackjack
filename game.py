@@ -48,6 +48,7 @@ def playFirst(ip):
 
 
 def main():
+    envioFinal = 0
     croupier = None
     jogando = False
     if(playFirst(IP)):
@@ -82,18 +83,22 @@ def main():
             croupier = waitMyTurn()
             jogando = True
 
-        if(croupier.allFinished()):
+        while(croupier.allFinished()):
             jogando = False
             os.system("clear")
+            print("Entra")
             croupier.showResults()
 
-            try:
-                ip, porta = croupier.getNext()
-                next(ip, int(porta), croupier)
-            except:
+            if(envioFinal > 0):
+                print("Resetando")
                 # Ultimo a receber a mensagem
+                del croupier
                 croupier = Croupier("conf.txt")
                 jogando = True
+            else:
+                ip, porta = croupier.getNext()
+                next(ip, int(porta), croupier)
+                envioFinal += 1
 
             if(not jogando):
                 croupier = waitMyTurn()
