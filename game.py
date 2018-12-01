@@ -76,7 +76,7 @@ def main():
             os.system('clear')
             croupier.showPlayerStatus(IP)
         elif(option == '3'):
-            ip, porta = croupier.getNext()
+            ip, porta = croupier.getNext(IP)
             next(ip, int(porta), croupier)
             jogando = False
             os.system('clear')
@@ -96,7 +96,7 @@ def main():
                 croupier = Croupier("conf.txt")
                 jogando = True
             else:
-                ip, porta = croupier.getNext()
+                ip, porta = croupier.getNext(IP)
                 next(ip, int(porta), croupier)
                 envioFinal += 1
 
