@@ -96,10 +96,9 @@ def main():
                 croupier = Croupier("conf.txt")
                 jogando = True
                 envioFinal = 0
-            else:
-                ip, porta = croupier.getNext()
-                next(ip, int(porta), croupier)
-                envioFinal += 1
+            ip, porta = croupier.getNext()
+            next(ip, int(porta), croupier)
+            envioFinal += 1
 
             if(not jogando):
                 croupier = waitMyTurn()
