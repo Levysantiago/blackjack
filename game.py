@@ -84,12 +84,19 @@ def main():
 
         if(croupier.allFinished()):
             ip, porta = croupier.getNext()
-            try:
-                next(ip, int(porta), croupier)
-            except:
-                pass  # Todos receberam
+            next(ip, int(porta), croupier)
             os.system("clear")
             croupier.showResults()
+
+            croupier = None
+            jogando = False
+            if(playFirst(IP)):
+                croupier = Croupier("conf.txt")
+                jogando = True
+
+            if(not jogando):
+                croupier = waitMyTurn()
+                jogando = True
 
 
 if __name__ == "__main__":
