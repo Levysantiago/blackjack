@@ -6,7 +6,7 @@ import os
 os.system('clear')
 IP = '192.168.2.59'
 PORT = 5101
-buffer_size = 1024
+buffer_size = 4096
 
 
 def get_menu():
@@ -34,9 +34,10 @@ def waitMyTurn():
     conexao, endereco = player.accept()
 
     while True:
-        dados = conexao.recv(4096)
+        dados = conexao.recv(buffer_size)
         if(dados != 0):
             break
+    player.close()
     return pickle.loads(dados)
 
 
@@ -96,7 +97,6 @@ def main():
                 del croupier
                 croupier = Croupier("conf.txt")
                 jogando = True
-                player.close()
             else:
                 ip, porta = croupier.getNext()
                 next(ip, int(porta), croupier)
