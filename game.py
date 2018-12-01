@@ -78,19 +78,20 @@ def main():
             jogando = False
             os.system('clear')
 
-        elif(not jogando):
+        if(not jogando):
             croupier = waitMyTurn()
             jogando = True
 
         if(croupier.allFinished()):
-            ip, porta = croupier.getNext()
-            next(ip, int(porta), croupier)
+            jogando = False
             os.system("clear")
             croupier.showResults()
 
-            croupier = None
-            jogando = False
-            if(playFirst(IP)):
+            try:
+                ip, porta = croupier.getNext()
+                next(ip, int(porta), croupier)
+            except:
+                # Ultimo a receber a mensagem
                 croupier = Croupier("conf.txt")
                 jogando = True
 

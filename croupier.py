@@ -46,7 +46,7 @@ class Croupier:
             print("\nDraw\n")
         else:
             print("\nPlayer " + winner.getNome() +
-                  " with " + str(winner.getPoints()) + " points")
+                  " with " + str(winner.getPoints()) + " points\n")
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
