@@ -95,7 +95,6 @@ def main():
                 del croupier
                 croupier = Croupier("conf.txt")
                 jogando = True
-                os.system("clear")
                 envioFinal = 0
             else:
                 ip, porta = croupier.getNext()
