@@ -60,6 +60,7 @@ def main():
         jogando = True
 
     while(not croupier.deck.empty()):
+        envioFinal = 0
         print(get_menu())
 
         option = raw_input()
@@ -95,7 +96,7 @@ def main():
                 del croupier
                 croupier = Croupier("conf.txt")
                 jogando = True
-                envioFinal = 0
+                player.close()
             else:
                 ip, porta = croupier.getNext()
                 next(ip, int(porta), croupier)
