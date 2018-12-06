@@ -2,6 +2,7 @@ from player import Player
 from deck import Deck
 from card import Card
 from itertools import cycle
+from prettytable import PrettyTable
 
 
 class Croupier:
@@ -76,18 +77,41 @@ class Croupier:
                 return False
         return True
 
+    def printHistorico(self, playerID):
+        player = self.findPlayer(playerID)
+        somador = 0
+        table = PrettyTable()
+        table.field_names = ["CARTA", "VALOR", "SOMATORIO"]
+        for card in player.cards:
+            somador += card.value()
+            table.add_row([card.name(), card.value(), somador])
+        print(table)
+        print('\n')
+
     def showPlayerStatus(self, playerID):
         player = self.findPlayer(playerID)
         cardName, cardValue = player.getLastCard()
+
+        print("\nSTATUS DO JOGO:")
+        table = PrettyTable()
+        table.field_names = ["JOGADORES", "STATUS"]
         msg_players = "\n"
         for p in self.list_player:
             if(p.isFinished()):
+                table.add_row([p.getNome(), "Esperando"])
                 msg_players += p.getNome() + " - Parou\n"
             else:
+                table.add_row([p.getNome(), "Jogando"])
                 msg_players += p.getNome() + " - Jogando\n"
-        print("\nSTATUS:"
-              "\nPoints = " + str(player.points) +
-              msg_players)
-        if(cardName != None):
-            print("\nCard = "+cardName+" Value = "+str(cardValue))
+        print(table)
+
+        print("\nMEU STATUS:")
+        table = PrettyTable()
+        table.field_names = ["PONTOS", "ÚLTIMA CARTA", "VALOR"]
+        if(cardName == None):
+            cardName = ""
+            cardValue = ""
+
+        table.add_row([str(player.points), cardName, cardValue])
+        print(table)
         print("\n")

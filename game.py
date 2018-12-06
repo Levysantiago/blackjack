@@ -14,7 +14,8 @@ def get_menu():
     menu += '(1) - Carta \n'
     menu += '(2) - Sem mais cartas \n'
     menu += '(3) - Proximo \n'
-    menu += '(4) - Meu Status \n'
+    menu += '(4) - Status Jogo\n'
+    menu += '(5) - Meu Historico \n'
 
     return menu
 
@@ -65,7 +66,7 @@ def main():
         envioFinal = 0
         print(get_menu())
 
-        option = raw_input()
+        option = input()
         if(option == '0'):
             os.system("clear")
             del croupier
@@ -86,6 +87,9 @@ def main():
         elif(option == '4'):
             os.system("clear")
             croupier.showPlayerStatus(IP)
+        elif(option == '5'):
+            os.system("clear")
+            croupier.printHistorico(IP)
 
         if(not jogando):
             croupier = waitMyTurn()
