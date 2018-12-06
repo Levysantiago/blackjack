@@ -8,7 +8,6 @@ class Croupier:
     def __init__(self, fileConfig):
         dados = open(fileConfig, 'r')
         self.list_player = []
-        self.dict_player = {}
         self.deck = Deck()
 
         index = 0
@@ -80,9 +79,15 @@ class Croupier:
     def showPlayerStatus(self, playerID):
         player = self.findPlayer(playerID)
         cardName, cardValue = player.getLastCard()
+        msg_players = "\n"
+        for p in self.list_player:
+            if(p.isFinished()):
+                msg_players += p.getNome() + " - Parou\n"
+            else:
+                msg_players += p.getNome() + " - Jogando\n"
         print("\nSTATUS:"
               "\nPoints = " + str(player.points) +
-              "\nFinished = " + str(player.isFinished()))
+              msg_players)
         if(cardName != None):
             print("\nCard = "+cardName+" Value = "+str(cardValue))
         print("\n")
