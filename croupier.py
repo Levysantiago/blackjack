@@ -8,6 +8,8 @@ from prettytable import PrettyTable
 class Croupier:
     def __init__(self, fileConfig):
         dados = open(fileConfig, 'r')
+        self.pedidoNovoJogo = None
+        self.respostaPedido = True
         self.list_player = []
         self.deck = Deck()
 
@@ -18,7 +20,6 @@ class Croupier:
             self.list_player.append(Player(ip, porta, nome, index))
             index += 1
         dados.close()
-        self.pool = self.list_player
 
     def getNext(self, playerID):
         player = self.findPlayer(playerID)
@@ -115,3 +116,33 @@ class Croupier:
         table.add_row([str(player.points), cardName, cardValue])
         print(table)
         print("\n")
+
+    def pedirNovoJogo(self, playerID):
+        self.pedidoNovoJogo = self.findPlayer(playerID)
+
+    def desativarPedido(self):
+        self.pedidoNovoJogo = None
+
+    def temPedidoNovoJogo(self):
+        if(self.pedidoNovoJogo != None):
+            return True
+        return False
+
+    def printQuemPediuNovoJogo(self):
+        print(self.pedidoNovoJogo.getNome() +
+              " pediu para iniciar um novo jogo. Você aceita? (s/n)")
+
+    def euPediNovoJogo(self, playerID):
+        player = self.findPlayer(playerID)
+        if(player.getIndex() == self.pedidoNovoJogo.getIndex()):
+            return True
+        return False
+
+    def contabilizaRespostaPedido(self, resp):
+        if(resp == 's'):
+            self.respostaPedido = self.respostaPedido and True
+        else:
+            self.respostaPedido = self.respostaPedido and False
+
+    def getRespostaPedido(self):
+        return self.respostaPedido

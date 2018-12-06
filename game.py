@@ -64,14 +64,45 @@ def main():
 
     while(not croupier.deck.empty()):
         envioFinal = 0
+
+        while(croupier.temPedidoNovoJogo()):
+            # Se foi eu que fiz o pedido
+            if(croupier.euPediNovoJogo(IP)):
+                if(croupier.getRespostaPedido()):
+                    os.system("clear")
+                    del croupier
+                    croupier = Croupier("conf.txt")
+                    jogando = True
+                else:
+                    print("Nao inicia um novo jogo")
+                    croupier.desativarPedido()
+                    break
+            # Se não foi eu que fiz o pedido
+            else:
+                croupier.printQuemPediuNovoJogo()
+                option = input()
+                croupier.contabilizaRespostaPedido(option)
+                jogando = False
+                os.system("clear")
+                next(croupier)
+                croupier = waitMyTurn()
+                jogando = True
+                os.system("clear")
+
         print(get_menu())
 
         option = input()
         if(option == '0'):
             os.system("clear")
+            croupier.pedirNovoJogo(IP)
+            next(croupier)
+            jogando = False
+            '''
+            os.system("clear")
             del croupier
             croupier = Croupier("conf.txt")
             jogando = True
+            '''
         elif(option == '1'):
             os.system('clear')
             croupier.getCard(IP)
@@ -90,6 +121,8 @@ def main():
         elif(option == '5'):
             os.system("clear")
             croupier.printHistorico(IP)
+        else:
+            os.system("clear")
 
         if(not jogando):
             croupier = waitMyTurn()
