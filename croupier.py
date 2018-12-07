@@ -32,7 +32,9 @@ class Croupier:
             return (self.list_player[index].ip, int(self.list_player[index].porta))
 
     def showResults(self):
-        print("\nRESULTS:")
+        table = PrettyTable()
+        table.field_names = ["JOGADOR", "PONTOS", "ESTOUROU", "GANHADOR"]
+        print("\nRESULTADO:")
         winner = self.list_player[0]
         for player in self.list_player[1:]:
             points = player.getPoints()
@@ -40,11 +42,24 @@ class Croupier:
                 winner = player
             elif(points > winner.getPoints() and points <= 21):
                 winner = player
+
         if(winner.getPoints() > 21):
-            print("\nDraw\n")
+            print("\nDRAW\n")
+            for p in self.list_player:
+                estouro = ''
+                if(p.getPoints() > 21):
+                    estouro = '¯\_(ツ)_/¯'
+                table.add_row([p.getNome(), p.getPoints(), estouro, ''])
         else:
-            print("\nPlayer " + winner.getNome() +
-                  " com " + str(winner.getPoints()) + " pontos\n")
+            for p in self.list_player:
+                estouro = ''
+                if(p.getPoints() > 21):
+                    estouro = '¯\_(ツ)_/¯'
+                if(p.getIndex() == winner.getIndex()):
+                    table.add_row([p.getNome(), p.getPoints(), estouro, "🏆"])
+                else:
+                    table.add_row([p.getNome(), p.getPoints(), estouro, ''])
+        print(table)
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
