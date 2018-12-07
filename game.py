@@ -4,8 +4,8 @@ import pickle
 import os
 
 os.system('clear')
-IP = '192.168.2.59'
-PORT = 5101
+IP = '10.42.0.159'
+PORT = 5102
 buffer_size = 4096
 
 
@@ -40,7 +40,7 @@ def waitMyTurn():
         dados = conexao.recv(buffer_size)
         if(dados != 0):
             break
-    player.close()
+    # player.close()
     return pickle.loads(dados)
 
 
@@ -59,6 +59,7 @@ def main():
         jogando = True
 
     if(not jogando):
+        print("Espere sua vez de jogar...")
         croupier = waitMyTurn()
         jogando = True
 
