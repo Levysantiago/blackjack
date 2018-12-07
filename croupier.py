@@ -31,13 +31,6 @@ class Croupier:
             index += 1
             return (self.list_player[index].ip, int(self.list_player[index].porta))
 
-    def showGameStatus(self):
-        print("\nGAME STATUS:")
-        for player in self.list_player:
-            print("\nPlayer: "+player.getNome() +
-                  "\nPoints = " + str(player.points))
-        print("\n")
-
     def showResults(self):
         print("\nRESULTS:")
         winner = self.list_player[0]
@@ -51,7 +44,7 @@ class Croupier:
             print("\nDraw\n")
         else:
             print("\nPlayer " + winner.getNome() +
-                  " with " + str(winner.getPoints()) + " points\n")
+                  " com " + str(winner.getPoints()) + " pontos\n")
 
     def findPlayer(self, playerID):
         return [x for x in self.list_player if x.ip == playerID][0]
@@ -89,7 +82,7 @@ class Croupier:
         print(table)
         print('\n')
 
-    def showPlayerStatus(self, playerID):
+    def showStatus(self, playerID):
         player = self.findPlayer(playerID)
         cardName, cardValue = player.getLastCard()
 
