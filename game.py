@@ -65,7 +65,7 @@ def main():
     while(not croupier.deck.empty()):
         envioFinal = 0
 
-        while(croupier.temPedidoNovoJogo()):
+        if(croupier.temPedidoNovoJogo()):
             os.system("clear")
             # Se foi eu que fiz o pedido
             if(croupier.euPediNovoJogo(IP)):
@@ -86,32 +86,28 @@ def main():
                 jogando = False
                 os.system("clear")
                 next(croupier)
-                print("Espere sua vez de jogar...")
-                croupier = waitMyTurn()
-                jogando = True
-                os.system("clear")
+        else:
+            print(get_menu())
+            option = input()
+            os.system("clear")
 
-        print(get_menu())
-        option = input()
-        os.system("clear")
-
-        if(option == '0'):
-            croupier.pedirNovoJogo(IP)
-            next(croupier)
-            jogando = False
-        elif(option == '1'):
-            croupier.getCard(IP)
-            croupier.showStatus(IP)
-        elif(option == '2'):
-            croupier.finish(IP)
-            croupier.showStatus(IP)
-        elif(option == '3'):
-            next(croupier)
-            jogando = False
-        elif(option == '4'):
-            croupier.showStatus(IP)
-        elif(option == '5'):
-            croupier.printHistorico(IP)
+            if(option == '0'):
+                croupier.pedirNovoJogo(IP)
+                next(croupier)
+                jogando = False
+            elif(option == '1'):
+                croupier.getCard(IP)
+                croupier.showStatus(IP)
+            elif(option == '2'):
+                croupier.finish(IP)
+                croupier.showStatus(IP)
+            elif(option == '3'):
+                next(croupier)
+                jogando = False
+            elif(option == '4'):
+                croupier.showStatus(IP)
+            elif(option == '5'):
+                croupier.printHistorico(IP)
 
         if(not jogando):
             print("Espere sua vez de jogar...")
